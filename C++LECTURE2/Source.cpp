@@ -52,6 +52,86 @@ public:
         size++;
     }
 
+    void PopFront()
+    {
+
+        if (head == nullptr)
+        {
+            cout << "Linked List is Empty" << endl;
+        }
+        else
+        {
+            Node* deleteNode = head;
+
+            head = deleteNode->next;
+
+            delete deleteNode;
+
+            size--;
+        }
+
+    }
+
+    void PushBack(T data)
+    {
+        if (head == nullptr)
+        {
+            head = new Node;
+            head->data = data;
+            head->next = nullptr;
+        }
+        else
+        {
+            Node* currentNode = head;
+            while (currentNode->next != nullptr)
+            {
+                currentNode = currentNode->next;
+            }
+
+            Node* newNode = new Node;
+
+            currentNode->next = newNode;
+            newNode->data = data;
+            newNode->next = nullptr;
+        }
+
+        size++;
+
+    }
+
+    void PopBack()
+    {
+
+        if (head == nullptr)
+        {
+            cout << "Linked List is Empty" << endl;
+        }
+        else
+        {
+            Node* deleteNode = head;
+            Node* previousNode;
+
+            if (size == 1)
+            {
+                head = deleteNode->next;
+                delete deleteNode;
+            }
+            else if(size > 1)
+            {
+                while (deleteNode->next != nullptr)
+                {
+                    previousNode = deleteNode;
+                    deleteNode = deleteNode->next;
+                }
+
+                previousNode->next = nullptr;
+                delete deleteNode;
+            }
+            size--;
+        }
+
+    }
+
     void Show()
     {
         Node* currentNode;
@@ -72,7 +152,18 @@ public:
 int main()
 {
 
+    SingleLinkedList<int> LinkList;
 
+    LinkList.PushFront(30);
+    LinkList.PushFront(20);
+    LinkList.PushFront(10);
+    LinkList.PushBack(0);
+    LinkList.PushBack(-10);
+    LinkList.PushBack(-20);
+
+    //LinkList.PopFront();
+
+    LinkList.Show();
 
     return 0;
 }
