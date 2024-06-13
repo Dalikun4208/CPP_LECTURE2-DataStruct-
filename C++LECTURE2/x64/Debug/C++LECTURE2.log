@@ -1,2 +1,5 @@
 ﻿  Source.cpp
-  C++LECTURE2.vcxproj -> C:\Users\Administrator\Desktop\CPP_LECTURE2-DataStruct-\C++LECTURE2\x64\Debug\C++LECTURE2.exe
+C:\Users\Administrator\Desktop\CPP_LECTURE2-DataStruct-\C++LECTURE2\Source.cpp(237,10): error C2039: 'insert': 'DoubleLinkedList<int>'의 멤버가 아닙니다.
+  C:\Users\Administrator\Desktop\CPP_LECTURE2-DataStruct-\C++LECTURE2\Source.cpp(213,5):
+  'DoubleLinkedList<int>' 선언을 참조하십시오.
+  
