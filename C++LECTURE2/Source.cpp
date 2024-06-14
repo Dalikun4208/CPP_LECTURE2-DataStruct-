@@ -3,218 +3,158 @@
 using namespace std;
 
 template <typename T>
-class DoubleLinkedList
+
+class CircleLinkedList
 {
 private:
 	int size;
-
-	struct Node;
-
-	Node* head;
-	Node* tail;
-
-public:
 	struct Node
 	{
 		T data;
 		Node* next;
-		Node* previous;
 	};
+	Node* head;
 
-	DoubleLinkedList()
+public:
+	CircleLinkedList()
 	{
 		size = 0;
 		head = nullptr;
-		tail = nullptr;
+	}
+
+	void PushBack(T data)
+	{
+		Node* newnode = new Node;
+		newnode->data = data;
+		newnode->next = nullptr;
+
+		if (head == nullptr)
+		{
+			head = newnode;
+			newnode->next = head;
+		}
+		else 
+		{
+			newnode->next = head->next;
+			head->next = newnode;
+			head = newnode;
+		}
+		size++;
 	}
 
 	void PushFront(T data)
 	{
-		Node* newNode = new Node;
-
-		newNode->data = data;
-		newNode->next = nullptr;
-		newNode->previous = nullptr;
+		Node* newnode = new Node;
+		newnode->data = data;
+		newnode->next = nullptr;
 
 		if (head == nullptr)
 		{
-			head = newNode;
-			tail = newNode;
+			head = newnode;
+			newnode->next = head;
 		}
 		else
 		{
-			head->previous = newNode;
-			newNode->next = head;
-
-			head = newNode;
+			newnode->next = head->next;
+			head->next = newnode;
 		}
-
 		size++;
 	}
 
 	void PopFront()
 	{
-		if (head == nullptr)
+		Node* deletenode = new Node;
+		deletenode->next = nullptr;
+
+		if (size == 0)
 		{
-			cout << "Linked List is Empty" << endl;
+			cout << "List Is Empty" << endl;
 		}
-		else
+		else if (size == 1)
 		{
-			Node* deleteNode = head;
-
-			if (head == tail)
-			{
-				head = nullptr;
-				tail = nullptr;
-			}
-			else
-			{
-				deleteNode->next->previous = nullptr;
-
-				head = head->next;
-			}
-
-			delete deleteNode;
-
-			size--;
-		}
-	}
-
-	void PushBack(T data)
-	{
-		Node* newNode = new Node;
-
-		newNode->data = data;
-		newNode->next = nullptr;
-		newNode->previous = nullptr;
-
-		if (tail == nullptr)
+			deletenode = head;
+			head = nullptr;
+			delete deletenode;
+		} 
+		else 
 		{
-			tail = newNode;
-			head = tail;
+			deletenode = head->next;
+			head->next = deletenode->next;
+			delete deletenode;
 		}
-		else
-		{
-			tail->next = newNode;
-			newNode->previous = tail;
-
-			tail = newNode;
-		}
-
-		size++;
+		size--;
 	}
 
 	void PopBack()
 	{
-		if (tail == nullptr)
+		Node* deletenode = new Node;
+		Node* currentnode = new Node;
+		deletenode->next = nullptr;
+		currentnode->next = nullptr;
+
+		if (size == 0)
 		{
-			cout << "Linked List is Empty" << endl;
+			cout << "List Is Empty" << endl;
+		}
+		else if (size == 1)
+		{
+			head = nullptr;
 		}
 		else
 		{
-			Node* deleteNode = tail;
+			deletenode = head;
+			currentnode = head;
 
-			if (head == tail)
+			for (int i = 0; i < size - 1; i++)
 			{
-				head = nullptr;
-				tail = nullptr;
-
-				delete deleteNode;
+				currentnode = currentnode->next;
 			}
-			else
-			{
-				tail->previous->next = nullptr;
-
-				tail = tail->previous;
-
-				delete deleteNode;
-			}
-
-			size--;
+			currentnode->next = head->next;
+			head = currentnode;
+			delete deletenode;
 		}
-	}
-
-	void Insert(Node* position, T data)
-	{
-		if (head == nullptr)
-		{
-			PushBack(data);
-		}
-		else
-		{
-			Node* previousNode = position;
-			Node* nextNode = position->next;
-
-			if (nextNode == nullptr)
-			{
-				PushBack(data);
-			}
-			else if (previousNode->previous == nullptr)
-			{
-				PushFront(data);
-			}
-			else
-			{
-				Node* newNode = new Node;
-
-				newNode->data = data;
-
-				previousNode->next = newNode;
-				nextNode->previous = newNode;
-
-				newNode->next = nextNode;
-				newNode->previous = previousNode;
-
-				size++;
-			}
-		}
-	}
-
-	int& Size()
-	{
-		return size;
-	}
-
-	Node* Begin()
-	{
-		return head;
+		size--;
 	}
 
 	void Show()
 	{
-		Node* currentNode = head;
-
-		while (currentNode != nullptr)
+		if (head != nullptr)
 		{
-			cout << currentNode->data << endl;
-			currentNode = currentNode->next;
+			Node* currentnode = new Node;
+			currentnode = head->next;
+
+			for (int i = 0; i < size; i++)
+			{
+				cout << currentnode->data << endl;
+				currentnode = currentnode->next;
+			}
 		}
 	}
 
-	~DoubleLinkedList()
-	{
-		while (head != nullptr)
-		{
-			PopFront();
-		}
-	}
 };
 
 int main()
 {
-	DoubleLinkedList<int> doubleLinkedList;
+	CircleLinkedList<int>  list;
 
-	doubleLinkedList.PushFront(10); // 10
-	doubleLinkedList.PushFront(20); // 20 10
-	doubleLinkedList.PushFront(30); // 30 20 10
+	list.PushBack(10);
+	list.PushBack(20);
+	list.PushBack(30);
+	list.PushFront(99);
 
-	doubleLinkedList.Insert(doubleLinkedList.Begin()->next, 99); // 30 99 20 10
+	list.Show();
 
-	cout << "Double Linked List의 Size : " << doubleLinkedList.Size() << endl;
+	cout << "----------------------------------" << endl;
 
-	doubleLinkedList.Show();
+	list.PopFront();
+	list.Show();
 
+	cout << "----------------------------------" << endl;
 
+	list.PopBack();
+	list.Show();
+
+	
 
 	return 0;
 }
