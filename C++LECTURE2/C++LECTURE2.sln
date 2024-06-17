@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Class1th(SingleLinkedList)"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Class2th(DoubleLinkedList)", "..\Class2th(DoubleLinkedList)\Class2th(DoubleLinkedList).vcxproj", "{03462FED-8FDE-497D-A140-7F54AACC67CF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Class3th(circlelist)", "..\Class3th(circlelist)\Class3th(circlelist).vcxproj", "{D5704E9B-E247-4EC5-820F-C5B16159529F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,14 @@ Global
 		{03462FED-8FDE-497D-A140-7F54AACC67CF}.Release|x64.Build.0 = Release|x64
 		{03462FED-8FDE-497D-A140-7F54AACC67CF}.Release|x86.ActiveCfg = Release|Win32
 		{03462FED-8FDE-497D-A140-7F54AACC67CF}.Release|x86.Build.0 = Release|Win32
+		{D5704E9B-E247-4EC5-820F-C5B16159529F}.Debug|x64.ActiveCfg = Debug|x64
+		{D5704E9B-E247-4EC5-820F-C5B16159529F}.Debug|x64.Build.0 = Debug|x64
+		{D5704E9B-E247-4EC5-820F-C5B16159529F}.Debug|x86.ActiveCfg = Debug|Win32
+		{D5704E9B-E247-4EC5-820F-C5B16159529F}.Debug|x86.Build.0 = Debug|Win32
+		{D5704E9B-E247-4EC5-820F-C5B16159529F}.Release|x64.ActiveCfg = Release|x64
+		{D5704E9B-E247-4EC5-820F-C5B16159529F}.Release|x64.Build.0 = Release|x64
+		{D5704E9B-E247-4EC5-820F-C5B16159529F}.Release|x86.ActiveCfg = Release|Win32
+		{D5704E9B-E247-4EC5-820F-C5B16159529F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
