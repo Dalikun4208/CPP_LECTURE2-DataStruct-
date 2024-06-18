@@ -2,89 +2,67 @@
 
 using namespace std;
 
-#define SIZE 5;
-
+#define SIZE 5
 template <typename T>
-
-class Stack
+class CircleQueue
 {
-private :
-	int top;
-	T container[5];
+private:
+    int front;
+    int rear;
+    int size;
+    T container[SIZE];
 public:
-	Stack()
-	{
-		top = -1;
-		for (int i = 0; i < 5; i++)
-		{
-			container[i] = 0;
-		}
-	}
+    CircleQueue()
+    {
+        front = 0;
+        rear = SIZE-1;
+        size = SIZE-1;
 
-	void Push(T data)
-	{
-		if (top >= 5)
-		{
-			cout << "stack overflow" << endl;
+        for (int i = 0; i < SIZE; i++)
+        {
+            container[i] = NULL;
+        }
+    }
 
-		}
-		else
-		{
-			container[++top] = data;
-		}
-	}
+    bool Empty()
+    {
+        if (rear == front)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-	void Pop()
-	{
-		if (Empty())
-		{
-			cout << "stack is empty" << endl;
-		}
-		else
-		{
-			top--;
-		}
-	}
-
-	int& size()
-	{
-		return top;
-	}
-
-	T& Top()
-	{
-		return container[top];
-	}
-
-	bool Empty()
-	{
-		if (top <= -1)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+    void Push(T data)
+    {
+        if (size < SIZE)
+        {
+            container[rear] = data;
+            rear++;
+            if (rear % SIZE == 0)
+            {
+                rear = rear - 1;
+            }
+            size++;
+        }
+        else
+        {
+            cout << "queue is full" << endl;
+        }
+    }
 
 };
 
 int main()
 {
-	Stack<int> stack;
-	stack.Push(10);
-	stack.Push(20);
-	stack.Push(30);
-	stack.Push(40);
-	stack.Push(50);
+    
+    CircleQueue<int> a;
 
-	while (stack.Empty() == false)
-	{
-		cout << stack.Top() << endl;
-		stack.Pop();
-	}
+    a.Push(10);
 
 
-	return 0;
+    return 0;
 }
