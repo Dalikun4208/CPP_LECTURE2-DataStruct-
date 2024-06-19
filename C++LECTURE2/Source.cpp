@@ -2,55 +2,69 @@
 
 using namespace std;
 
-#define SIZE 5
 template <typename T>
-class CircleQueue
+class Vector
 {
 private:
-    int front;
-    int rear;
     int size;
-    T container[SIZE];
+    int capacity;
+    T * container;
 public:
-    CircleQueue()
+    Vector()
     {
-        front = 0;
-        rear = SIZE-1;
-        size = SIZE-1;
+        size = 0;
+        capacity = 0;
+        container = nullptr;
+    }
+    
+    void Resize(int newsize)
+    {
+        capacity = newsize;
 
-        for (int i = 0; i < SIZE; i++)
+        T* newContainer = new T[capacity];
+
+        for (int i = 0; i < capacity ; i++)
         {
-            container[i] = NULL;
+            newContainer[i] = NULL;
         }
+
+        for (int i = 0; i < size; i++)
+        {
+            newContainer[i] = container[i];
+        }
+
+        if (container != nullptr)
+        {
+            delete[] container;
+        }
+
+        container = newContainer;
+
     }
 
-    bool Empty()
+    void PushBack(T data)
     {
-        if (rear == front)
+        if (capacity <= 0)
         {
-            return true;
+            Resize(1);
         }
-        else
+        else if (size >= capacity)
         {
-            return false;
+            Resize(capacity * 2);
         }
+        container[size++] = data;
     }
 
-    void Push(T data)
+    int& Size()
     {
-        if (size < SIZE)
+        return size;
+    }
+
+    ~Vector()
+    {
+        if (container != nullptr)
         {
-            container[rear] = data;
-            rear++;
-            if (rear % SIZE == 0)
-            {
-                rear = rear - 1;
-            }
-            size++;
-        }
-        else
-        {
-            cout << "queue is full" << endl;
+            delete[] container;
         }
     }
 
@@ -58,10 +72,16 @@ public:
 
 int main()
 {
-    
-    CircleQueue<int> a;
+    Vector<int> vector;
 
-    a.Push(10);
+    vector.PushBack(10);
+    vector.PushBack(20);
+    vector.PushBack(30);
+
+    for (int i = 0; i < vector.Size(); i++)
+    {
+        cout << vector[i] << endl;
+    }
 
 
     return 0;
