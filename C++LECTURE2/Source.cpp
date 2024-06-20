@@ -1,58 +1,66 @@
 ﻿#include <iostream>
+#pragma warnings(disable: 4996)
 
 using namespace std;
 
-template <typename T>
-class Vector
+//template <typename T>
+class Str
 {
 private:
+    char* container;
     int size;
-    int capacity;
-    T * container;
 public:
-    Vector()
+    Str()
     {
-        size = 0;
-        capacity = 0;
         container = nullptr;
+        size = 0;
     }
-    
-    void Resize(int newsize)
+    void operator = (const char * content)
     {
-        capacity = newsize;
-
-        T* newContainer = new T[capacity];
-
-        for (int i = 0; i < capacity ; i++)
+        int length = strlen(content) + 1;
+        size = strlen(content);
+        if (container == nullptr)
         {
-            newContainer[i] = NULL;
+            container = new char[length];
+            for (int i = 0; i < length - 1; i++)
+            {
+                container[i] = content[i];
+            }
         }
+        else
+        {
+            char* newContainer = new char[length];
+            for (int i = 0; i < length - 1; i++)
+            {
+                newContainer[i] = content[i];
+            }
+            delete container;
+            container = newContainer;
+        }
+    }
 
+    char & operator [] (const int& index)
+    {
+        return container[index];
+    }
+
+    int compare(const char * content)
+    {
         for (int i = 0; i < size; i++)
         {
-            newContainer[i] = container[i];
+            if (container[i] != content[i])
+            {
+                if (container[i] > content[i])
+                {
+                    return 1;
+                }
+                else if(container[i] < content[i])
+                {
+                    return -1;
+                }
+            }
         }
-
-        if (container != nullptr)
-        {
-            delete[] container;
-        }
-
-        container = newContainer;
-
-    }
-
-    void PushBack(T data)
-    {
-        if (capacity <= 0)
-        {
-            Resize(1);
-        }
-        else if (size >= capacity)
-        {
-            Resize(capacity * 2);
-        }
-        container[size++] = data;
+        return 0;
     }
 
     int& Size()
@@ -60,29 +68,22 @@ public:
         return size;
     }
 
-    ~Vector()
-    {
-        if (container != nullptr)
-        {
-            delete[] container;
-        }
-    }
-
 };
 
 int main()
 {
-    Vector<int> vector;
+    Str a;
+    
+    a = "abcdefg";
 
-    vector.PushBack(10);
-    vector.PushBack(20);
-    vector.PushBack(30);
-
-    for (int i = 0; i < vector.Size(); i++)
+    cout << "Size : " << a.Size() << endl;
+    cout << "Size : " << a[3] << endl;
+    for (int i = 0; i < a.Size(); i++)
     {
-        cout << vector[i] << endl;
+        cout << a[i];
     }
 
+    cout << "값은 : " << a.compare("abcdef") << endl;
 
     return 0;
 }
