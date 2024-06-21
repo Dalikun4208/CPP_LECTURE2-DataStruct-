@@ -3,87 +3,40 @@
 
 using namespace std;
 
-//template <typename T>
-class Str
+template <typename Key, typename Value>
+class HashTable
 {
 private:
-    char* container;
     int size;
+    struct Node
+    {
+        Key key;
+        Value Value;
+        Node* Next;
+    };
+    struct Bucket
+    {
+        Node* head;
+        int count;
+    };
+
+    Bucket bucket[size];
+
+
+
 public:
-    Str()
+    HashTable()
     {
-        container = nullptr;
         size = 0;
+        Node = nullptr;
+        Bucket = nullptr;
     }
-    void operator = (const char * content)
-    {
-        int length = strlen(content) + 1;
-        size = strlen(content);
-        if (container == nullptr)
-        {
-            container = new char[length];
-            for (int i = 0; i < length - 1; i++)
-            {
-                container[i] = content[i];
-            }
-        }
-        else
-        {
-            char* newContainer = new char[length];
-            for (int i = 0; i < length - 1; i++)
-            {
-                newContainer[i] = content[i];
-            }
-            delete container;
-            container = newContainer;
-        }
-    }
-
-    char & operator [] (const int& index)
-    {
-        return container[index];
-    }
-
-    int compare(const char * content)
-    {
-        for (int i = 0; i < size; i++)
-        {
-            if (container[i] != content[i])
-            {
-                if (container[i] > content[i])
-                {
-                    return 1;
-                }
-                else if(container[i] < content[i])
-                {
-                    return -1;
-                }
-            }
-        }
-        return 0;
-    }
-
-    int& Size()
-    {
-        return size;
-    }
-
 };
 
 int main()
 {
-    Str a;
     
-    a = "abcdefg";
 
-    cout << "Size : " << a.Size() << endl;
-    cout << "Size : " << a[3] << endl;
-    for (int i = 0; i < a.Size(); i++)
-    {
-        cout << a[i];
-    }
-
-    cout << "값은 : " << a.compare("abcdef") << endl;
 
     return 0;
 }
