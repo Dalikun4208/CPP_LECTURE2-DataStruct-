@@ -86,6 +86,70 @@ public:
         bucket[hashIndex].count++;
     }
 
+    ~HashTable()
+    {
+        for (int i = 0; i < SIZE; i++)
+        {
+            Node* DeleteNode = bucket[i].head;
+            Node* NextNode = bucket[i].head;
+
+            if (bucket[i].head == nullptr)
+            {
+                continue;
+            }
+            else
+            {
+                while (NextNode != nullptr)
+                {
+                    NextNode = DeleteNode->next;
+                    delete DeleteNode;
+                    DeleteNode = NextNode;
+                }
+            }
+
+        }
+        
+    }
+
+    void Remove(KEY key)
+    {
+        int Remove = HashFunction(key);
+        Node * currentNode = bucket[Remove].head;
+        Node * previousNode = nullptr;
+
+        if (currentNode == nullptr)
+        {
+            cout << "Value is Empty" << endl;
+            return;
+        }
+        else
+        {
+            while (currentNode !- nullptr)
+            {
+                if (currentNode->key == key)
+                {
+                    if (currentNode == bucket[Remove].head)
+                    {
+                        bucket[Remove].head = currentNode->next;
+                    }
+                    else
+                    {
+                        previousNode->next = currentNode->next;
+                    }
+                    bucket[Remove].count--;
+                    delete currentNode;
+                    return;
+                }
+                else
+                {
+                    previousNode = currentNode;
+                    currentNode = currentNode->next;
+                }
+            }
+            cout << "Value is Empty" << endl;
+        }
+    }
+
 };
 
 int main()
