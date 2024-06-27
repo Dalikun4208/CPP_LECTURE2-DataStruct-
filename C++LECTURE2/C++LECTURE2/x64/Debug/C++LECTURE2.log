@@ -1,2 +1,2 @@
 ﻿  Source.cpp
-C:\Users\tphu7\OneDrive\문서\GitHub\CPP_LECTURE2-DataStruct-\C++LECTURE2\Source.cpp : error C1041: 프로그램 데이터베이스 'C:\Users\tphu7\OneDrive\문서\GitHub\CPP_LECTURE2-DataStruct-\C++LECTURE2\C++LECTURE2\x64\Debug\vc143.idb'을(를) 열 수 없습니다. 여러 CL.EXE에서 동일한 .PDB 파일에 쓰는 경우 /FS를 사용하십시오.
+  C++LECTURE2.vcxproj -> C:\Users\tphu7\OneDrive\문서\GitHub\CPP_LECTURE2-DataStruct-\C++LECTURE2\x64\Debug\C++LECTURE2.exe

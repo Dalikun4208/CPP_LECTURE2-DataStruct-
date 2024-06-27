@@ -2,162 +2,88 @@
 
 using namespace std;
 
-#define SIZE 6
+#define SIZE 8
 
-template<typename KEY, typename VALUE>
-class HashTable
+template <typename T>
+class Heap
 {
 private:
-    struct Node
-    {
-        KEY key;
-        VALUE value;
-
-        Node* next;
-    };
-
-    struct Bucket
-    {
-        int count;
-        Node* head;
-    };
-
-    Bucket bucket[SIZE];
-
+    int index;
+    T container[SIZE];
 public:
-    HashTable()
+    Heap()
     {
         for (int i = 0; i < SIZE; i++)
         {
-            bucket[i].count = 0;
-            bucket[i].head = nullptr;
-        }
-    }
-
-    template <typename T>
-    int HashFunction(T key)
-    {
-        unsigned int hashIndex = (int)key % SIZE;
-
-        return hashIndex;
-    }
-
-    template<>
-    int HashFunction(std::string key)
-    {
-        int result = 0;
-
-        for (const char& element : key)
-        {
-            result += element;
+            container[i] = NULL;
         }
 
-        int hashIndex = result % SIZE;
-
-        return hashIndex;
+        index = 0;
     }
 
-    Node* CreateNode(KEY key, VALUE value)
+    void Insert(T data)
     {
-        Node* newNode = new Node();
-        newNode->key = key;
-        newNode->value = value;
-        newNode->next = nullptr;
-
-        return newNode;
-    }
-
-    void Insert(KEY key, VALUE value)
-    {
-        // 해시 함수를 통해서 값을 받는 임시변수
-        int hashIndex = HashFunction(key);
-        //새로운 노드를 생성합니다.
-        Node* newNode = CreateNode(key, value);
-        //노드가 1개라도 존재하지 않는다면
-        if (bucket[hashIndex].head == nullptr)
+        if (index >= SIZE)
         {
-            bucket[hashIndex].head = newNode;
-        }
-        else 
-        {
-
-        }
-
-        bucket[hashIndex].count++;
-    }
-
-    ~HashTable()
-    {
-        for (int i = 0; i < SIZE; i++)
-        {
-            Node* DeleteNode = bucket[i].head;
-            Node* NextNode = bucket[i].head;
-
-            if (bucket[i].head == nullptr)
-            {
-                continue;
-            }
-            else
-            {
-                while (NextNode != nullptr)
-                {
-                    NextNode = DeleteNode->next;
-                    delete DeleteNode;
-                    DeleteNode = NextNode;
-                }
-            }
-
-        }
-        
-    }
-
-    void Remove(KEY key)
-    {
-        int Remove = HashFunction(key);
-        Node * currentNode = bucket[Remove].head;
-        Node * previousNode = nullptr;
-
-        if (currentNode == nullptr)
-        {
-            cout << "Value is Empty" << endl;
-            return;
+            cout << "Heap Overflow" << endl;
         }
         else
         {
-            while (currentNode !- nullptr)
+            container[++index] = data;
+
+            int child = index;
+            int parent = child / 2;
+
+            while (child > 1)
             {
-                if (currentNode->key == key)
+                if (container[parent] < container[child])
                 {
-                    if (currentNode == bucket[Remove].head)
-                    {
-                        bucket[Remove].head = currentNode->next;
-                    }
-                    else
-                    {
-                        previousNode->next = currentNode->next;
-                    }
-                    bucket[Remove].count--;
-                    delete currentNode;
-                    return;
+                    std::swap(container[parent], container[child]);
                 }
-                else
-                {
-                    previousNode = currentNode;
-                    currentNode = currentNode->next;
-                }
+
+                child = parent;
+                parent = child / 2;
+
             }
-            cout << "Value is Empty" << endl;
         }
+
+    }
+
+    void Show()
+    {
+        for (int i = 1; i <= index; i++)
+        {
+            cout << container[i] << " ";
+        }
+    }
+
+    T Remove()
+    {
+        if (index <= 0)
+        {
+            cout << "heap is empty" << endl;
+            exit(1);
+        }
+        T result = container[1];
+        container[1] = container[index];
+        container[index] = NULL;
+        index--;
+
     }
 
 };
 
 int main()
 {
-    HashTable<std::string, std::string>    hashTable;
+    Heap<int> heap;
 
-    cout << hashTable.HashFunction("Kim");
+    heap.Insert(6);
+    heap.Insert(7);
 
+    heap.Insert(2);
+    heap.Insert(10);
+
+    heap.Show();
 
     return 0;
 }
