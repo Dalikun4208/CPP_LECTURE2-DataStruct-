@@ -41,6 +41,98 @@ public:
         return newNode;
     }
 
+    void Remove(T data)
+    {
+        if (root == nullptr)
+        {
+            cout << "No node in here " << endl;
+        }
+        else
+        {
+            Node* currentNode = root;
+            Node* parentNode = nullptr;
+            while (currentNode != nullptr && currentNode->data != data)
+            {
+                if (currentNode->data > data)
+                {
+                    parentNode = currentNode;
+                    currentNode = currentNode->left;
+                }
+                else if(currentNode->data < data)
+                {
+                    parentNode = currentNode;
+                    currentNode = currentNode->right;
+                }
+            }
+            // 값이 같게 되었을 경우
+            if (currentNode == nullptr)
+            {
+                cout << "Data Nor found in the Binary tree" << endl;
+            }
+            else if(currentNode->left == nullptr && currentNode->right == nullptr)
+            {
+                if (parentNode != nullptr)
+                {
+                    if (parentNode->left == currentNode)
+                    {
+                        parentNode->left = nullptr;
+                    }
+                    else
+                    {
+                        parentNode->right = nullptr;
+                    }
+                }
+                else
+                {
+                    root = nullptr;
+                }
+            }
+            else if (currentNode->left == nullptr || currentNode->right == nullptr)
+            {
+                Node* childNode = nullptr;
+                if (currentNode->left != nullptr)
+                {
+                    childNode = currentNode->left;
+                }
+                else
+                {
+                    childNode = currentNode->right;
+                }
+
+                if (parentNode != nullptr)
+                {
+                    if (parentNode->left == currentNode)
+                    {
+                        parentNode->left = childNode;
+                    }
+                    else
+                    {
+                        parentNode->right = childNode;
+                    }
+                }
+
+            }
+            else
+            {
+                Node* childNode = currentNode->right;
+                Node* traceNode = childNode;
+
+                while (childNode->left != nullptr)
+                {
+                    traceNode = childNode;
+                    childNode = childNode->left;
+                }
+
+                currentNode->data = childNode->data;
+                traceNode->left = childNode->right;
+                delete childNode;
+                return;
+
+            }
+            delete currentNode;
+        }
+    }
+
     void Insert(T data)
     {
         if (root == nullptr)
@@ -130,6 +222,8 @@ int main()
     tree.Insert(5);
 
     tree.Inorder(tree.Root());
+
+    tree.Remove(6);
 
     return 0;
 }
